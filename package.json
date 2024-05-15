@@ -1,0 +1,30 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "JWTdemo.js",
+  "scripts": {
+    "build": "netlify deploy --prod",
+    "start": "node JWTdemo.js",
+    "dev": "nodemon JWTdemo.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "msnodesqlv8": "^2.7.0",
+    "mysql": "^2.18.1",
+    "netlify-cli": "^17.23.5",
+    "netlify-lambda": "^2.0.16",
+    "nodemon": "^3.0.1",
+    "serverless-http": "^3.2.0",
+    "util": "^0.12.5"
+  }
+}
