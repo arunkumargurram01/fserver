@@ -4,13 +4,15 @@ const {Promisfy} = require('util')// used for creating async functions by using 
 
 //Mysql database connection module using "createpool" that is used to do parrallel database queries
 const pool = createPool({
-    host : "localhost",
-    user : "root",
-    password : "root123", // We changed the original password to connect with db.
-    database:'fastoo_db',
-    connectionLimit: 10,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    connectionLimit: process.env.DB_CONNECTION_LIMIT || 10,
+});
 
-})
+// Promisify the query function for async/await
+pool.query = promisify(pool.query);
 
 //For checking a new user's given mail is already exist or not
 const checkMail = async (mail) => {
