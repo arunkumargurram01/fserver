@@ -31,12 +31,14 @@ const coreOptions = {
     credentials: true,
     optionSuccessStatus: 200
   }; */
-  app.use(cors({
-  origin: 'https://fasto-cxsj.onrender.com',
+
+const allowedOrigin = process.env.FRONTEND_URL;
+
+const corsOptions = {
+  origin: allowedOrigin,
   credentials: true,
   optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
-
-  }));
+};
   
 
 
