@@ -17,8 +17,8 @@ const hfModule = require('./PasswordBcrypt')
 
 //JWT Module
 const jwt = require('jsonwebtoken')
-require('dotenv').config();
 
+require('dotenv').config();
 
 app.use(express.json())
 app.use(bodyParser.json())
@@ -31,14 +31,15 @@ const coreOptions = {
     credentials: true,
     optionSuccessStatus: 200
   }; */
-
-const allowedOrigin = process.env.FRONTEND_URL;
-
 const corsOptions = {
   origin: allowedOrigin,
   credentials: true,
   optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
   
 
 
