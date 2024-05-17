@@ -14,7 +14,7 @@ const pool = createPool({
 });
 
 // Promisify the query function for async/await
-pool.query = promisify(pool.query);
+//pool.query = promisify(pool.query);
 
 //For checking a new user's given mail is already exist or not
 const checkMail = async (mail) => {
