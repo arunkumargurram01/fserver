@@ -345,6 +345,14 @@ app.get('/test',async(req,res) => {
     }
 })
 
+app.get('/frontedurl',async(req,res) => {
+    try{
+        res.json({'url': process.env.FRONTEND_URL})
+    }
+    catch(err){
+        console.log(`ERR In userdetails Route : ${err}`);
+    }
+})
 
 
 /* data request from client by including "jwt" in request, and we check the "jwt" token with "authentcateToken" fun
