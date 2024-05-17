@@ -1,4 +1,4 @@
-const express = require('express')
+/* const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors');
 //const routes = require('./Routes/router')
@@ -25,14 +25,37 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 
-/* app.use(bodyParser.urlencoded({extended:false}))
-const coreOptions = {
-    origin: 'http://localhost:3000', // Update with your frontend port
-    credentials: true,
-    optionSuccessStatus: 200
-  }; */
+const allowedOrigin = process.env.FRONTEND_URL;
+const corsOptions = {
+  origin: allowedOrigin,
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions)); */
+
+  const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+const serverless = require('serverless-http');
+const dbModule = require('./Database/database');
+const hfModule = require('./PasswordBcrypt');
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config();
+
+const app = express();
+
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 const allowedOrigin = process.env.FRONTEND_URL;
+console.log('Allowed Origin:', allowedOrigin); // Log the allowed origin for debugging
+
 const corsOptions = {
   origin: allowedOrigin,
   credentials: true,
@@ -42,7 +65,18 @@ const corsOptions = {
 // Apply CORS middleware
 app.use(cors(corsOptions));
 
-  
+// Debugging middleware to log the CORS headers
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', allowedOrigin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 
 
 
