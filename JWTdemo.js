@@ -321,6 +321,26 @@ app.get('/allusers',authenticateToken,async(req, res) => {
     }
 })
 
+app.get('/database',async(req,res) => {
+    try {
+        const dbdata = await dbModule.retriveData(5);
+        console.log(dbdata);
+        res.json(dbdata)
+
+    } catch (error) {
+        console.error(`ERROR Occurred: ${error}`);
+    }
+})
+
+app.get('/test',async(req,res) => {
+    try{
+        res.json({'working': 'True'})
+    }
+    catch(err){
+        console.log(`ERR In userdetails Route : ${err}`);
+    }
+})
+
 
 
 /* data request from client by including "jwt" in request, and we check the "jwt" token with "authentcateToken" fun
