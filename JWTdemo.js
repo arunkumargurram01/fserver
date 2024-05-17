@@ -32,11 +32,12 @@ const coreOptions = {
     optionSuccessStatus: 200
   }; */
   app.use(cors({
-    origin : 'http://localhost:3000',
-    credentials : true
+  origin: 'https://fasto-cxsj.onrender.com',
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+
   }));
   
-
 
 
 
