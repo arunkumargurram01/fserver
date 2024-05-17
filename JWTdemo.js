@@ -31,6 +31,8 @@ const coreOptions = {
     credentials: true,
     optionSuccessStatus: 200
   }; */
+
+const allowedOrigin = process.env.FRONTEND_URL;
 const corsOptions = {
   origin: allowedOrigin,
   credentials: true,
