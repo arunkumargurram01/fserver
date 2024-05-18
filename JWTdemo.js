@@ -135,8 +135,17 @@ app.post('/signup',async(req, res) => {
         
             //Creating JWT token by adding user_id into it  and sending as a cookie to the client
             const accessToken = jwt.sign({ user_Id: userDetails.user_Id }, process.env.ACCESS_TOKEN_SECRET);
-            res.cookie('JWTcookie', accessToken);
+            //res.cookie('JWTcookie', accessToken);
+            // Set the cookie
+              res.cookie('JWTcookie', token, {
+                  httpOnly: true,
+                  secure: true, // Ensure this is true if using HTTPS
+                  sameSite: 'None', // Adjust according to your needs
+              });
+          
             res.json({"access": true, "username": username });
+
+          
             // Setting cart_id value 
             const cart_id = await dbModule.createCartId(userDetails.user_Id);
             
@@ -179,8 +188,15 @@ app.post('/signup',async(req, res) => {
      */         const accessToken = jwt.sign({user_Id}, process.env.ACCESS_TOKEN_SECRET) //using uid for serilization and to find a specific user for db operations & authorization in sub sequent requests
                 
                 //sending the token to the client for sub sequent requests authorization
-                res.cookie('JWTcookie', accessToken );
+                //res.cookie('JWTcookie', accessToken );
+                // Set the cookie
+                  res.cookie('JWTcookie', token, {
+                    httpOnly: true,
+                    secure: true, // Ensure this is true if using HTTPS
+                    sameSite: 'None', // Adjust according to your needs
+                  });
                 res.json({"access": true})
+              
             }
             else{
                 //console.log('Incorrect Password')
@@ -233,7 +249,7 @@ app.post('/adminlogin',async(req, res) => {
 
 //Creating a middleware function to check the token and user details whether the token is vailed or not 
 //this method we allocate to every other route after a user logged in for cheking thire token validity
-const authenticateToken = (req, res, next)  => {
+/* const authenticateToken = (req, res, next)  => {
     //console.log(`Middle ware called`)
     token = req.cookies.JWTcookie;
      try{
@@ -260,7 +276,29 @@ const authenticateToken = (req, res, next)  => {
      //console.log(`ERROR IN Middleware : ${err}`)
      res.status(401);
   }
-}
+} */
+
+//Updated Authentcation 
+const authenticateToken = (req, res, next) => {
+  const token = req.cookies.JWTcookie;
+  if (token == null) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Unauthorized: Invalid token' });
+    }
+
+    //Extract user ID from the token payload
+    req.userId = decoded.user_Id; // Make sure the payload has user_Id
+    next(); // Proceed to the next middleware or route handler
+  });
+};
+
+
+
+
 
 //The all routes after signin and login must be checked by "authenticateToken" middleware, then proceed to next operations
 
