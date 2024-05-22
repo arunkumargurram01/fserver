@@ -137,7 +137,7 @@ app.post('/signup',async(req, res) => {
             const accessToken = jwt.sign({ user_Id: userDetails.user_Id }, process.env.ACCESS_TOKEN_SECRET);
             //res.cookie('JWTcookie', accessToken);
             // Set the cookie
-              res.cookie('JWTcookie', token, {
+              res.cookie('JWTcookie', accessToken, {
                   httpOnly: true,
                   secure: true, // Ensure this is true if using HTTPS
                   sameSite: 'None', // Adjust according to your needs
@@ -190,7 +190,7 @@ app.post('/signup',async(req, res) => {
                 //sending the token to the client for sub sequent requests authorization
                 //res.cookie('JWTcookie', accessToken );
                 // Set the cookie
-                  res.cookie('JWTcookie', token, {
+                  res.cookie('JWTcookie', accessToken, {
                     httpOnly: true,
                     secure: true, // Ensure this is true if using HTTPS
                     sameSite: 'None', // Adjust according to your needs
