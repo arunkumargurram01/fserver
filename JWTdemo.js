@@ -247,6 +247,20 @@ app.post('/adminlogin',async(req, res) => {
         }
     }) 
 
+
+  //User Logout route to clear JWT token at user browser
+  app.post('/logout', (req, res) => {
+  // Clear the cookie by setting it with an expired date
+  res.clearCookie('JWTcookie', {
+    httpOnly: true,
+    secure: true, // Ensure this matches how the cookie was originally set
+    sameSite: 'None' // Adjust according to your needs
+  });
+  // Send a response back to the frontend
+  res.status(200).json({ message: 'Logout successful' });
+});
+
+
 //Creating a middleware function to check the token and user details whether the token is vailed or not 
 //this method we allocate to every other route after a user logged in for cheking thire token validity
 /* const authenticateToken = (req, res, next)  => {
